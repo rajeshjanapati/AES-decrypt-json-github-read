@@ -72,5 +72,21 @@ Write-Host $decrypteddata
 # Define the local file path and file name
 $filePath = "jsonfile/decrypted_data.json"
 
+# Clone the other repo to your local machine.
+git clone https://github.com/rajeshjanapati/AES-decrypt-json-github-read.git
+
+# Change the working directory to the cloned repo.
+# cd myrepo
+
+# Copy the `decrypted_data.json` file from the first repo to the second repo.
+Copy-Item .\jsonfile/decrypted_data.json
+
 # Write the JSON data to the file
 $encryptedJsonData | Set-Content -Path $filePath -Encoding UTF8
+
+# Commit the changes to the second repo.
+git add .
+git commit -m "Add decrypted data file."
+
+# Push the changes to the remote repository.
+git push origin master
