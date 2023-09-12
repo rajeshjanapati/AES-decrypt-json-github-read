@@ -6,7 +6,6 @@ $sourceRepo = "AES-Encryption-Jsonfile-github"
 $branchName = "encrypt/keys"
 $filePath = "jsonfile/encrypted_data.json"
 
-
 # Define the GitHub API URL for fetching the file content from a specific branch
 $apiUrl = "https://api.github.com/repos/"+$githubUsername+"/"+$sourceRepo+"/contents/"+$filePath+"?ref="+$branchName
 
