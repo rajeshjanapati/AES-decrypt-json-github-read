@@ -119,5 +119,4 @@ jobs:
 
       - name: Push changes to Git
         run: |
-          git push origin decrypt/keys
-
+          git push origin master
