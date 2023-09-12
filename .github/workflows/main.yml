@@ -1,0 +1,84 @@
+name: Decrypt
+
+on:
+  workflow_dispatch:
+
+env:
+
+  DEPLOYMENT_NAME: Encrypt keys to GitHub # TODO: update to deployment name
+
+  # Default Target Apigee Organization et environment (can be also be dynamically defined in [Set Variables *] steps)
+
+  APIGEE_ORG: ${{ secrets.APIGEE_ORG }}
+
+  APIGEE_ENV: ${{ secrets.APIGEE_ENV }}
+
+  GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+  WORKFLOW_IDENTITY_FEDERATION_NAME: ${{ secrets.WORKFLOW_IDENTITY_FEDERATION_NAME }}
+
+  key: ${{ secrets.key }}
+
+  APIGEE_BASE_URL: "https://apigee.googleapis.com/v1/organizations/"
+
+ 
+
+jobs:
+
+  apigee-window-artifacts:
+
+    name: Decrypt Keys
+
+    runs-on: ubuntu-latest
+
+ 
+
+    permissions:
+
+      contents: 'read'
+
+      id-token: 'write'
+
+ 
+
+    steps:
+
+      - name: Check out repository code
+
+        uses: actions/checkout@v3
+
+        with:
+
+          persist-credentials: false
+
+          fetch-depth: 0
+
+ 
+
+      # Configure Workload Identity Federation and generate an access token.
+
+      - id: 'auth'
+
+        name: 'Authenticate to Google Apigee Cloud'
+
+        uses: 'google-github-actions/auth@v1'
+
+        with:
+
+          token_format: 'access_token'
+          workload_identity_provider: '${{ secrets.WORKFLOW_IDENTITY_FEDERATION_NAME }}'
+          service_account: '${{ secrets.GCP_SERVICE_ACCOUNT }}'
+
+      - name: Decrept Keys
+
+        shell: pwsh
+
+        run: |
+
+          $env:ORG = "${{ secrets.APIGEE_ORG }}"
+
+          $env:TOKEN = "${{ steps.auth.outputs.access_token }}"
+          $env:GIT_TOKEN = "${{ secrets.TOKEN_GIT }}"
+          $env:key = "${{ secrets.key }}"
+
+          Invoke-Pester ./scripts.ps1 -Passthru
