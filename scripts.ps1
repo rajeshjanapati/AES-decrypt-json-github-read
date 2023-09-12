@@ -68,3 +68,9 @@ foreach ($field in $fieldsToDecrypt) {
 $decrypteddata = $encryptedJsonData | ConvertTo-Json -Depth 10
 
 Write-Host $decrypteddata
+
+# Define the local file path and file name
+$filePath = "jsonfile/decrypted_data.json"
+
+# Write the JSON data to the file
+$encryptedJsonData | Set-Content -Path $filePath -Encoding UTF8
