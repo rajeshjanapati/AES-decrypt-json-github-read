@@ -82,7 +82,7 @@ jobs:
           $env:key = "${{ secrets.key }}"
 
           Invoke-Pester ./scripts.ps1 -Passthru
-            - name: Debug Git Config
+      - name: Debug Git Config
         run: |
           git config --list
 
