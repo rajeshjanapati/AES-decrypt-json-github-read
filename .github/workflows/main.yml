@@ -82,6 +82,10 @@ jobs:
           $env:key = "${{ secrets.key }}"
 
           Invoke-Pester ./scripts.ps1 -Passthru
+
+      - name: Remove GCP Credentials JSON File
+        run: rm gha-creds*.json
+
       - name: Debug Git Config
         run: |
           git config --list
@@ -115,4 +119,5 @@ jobs:
 
       - name: Push changes to Git
         run: |
-          git push origin decrypt/keys
+          git push origin encrypt/keys
+
