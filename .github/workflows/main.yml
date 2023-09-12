@@ -115,4 +115,4 @@ jobs:
 
       - name: Push changes to Git
         run: |
-          git push origin main
+          git push
