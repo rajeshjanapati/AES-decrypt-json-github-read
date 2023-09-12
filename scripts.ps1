@@ -89,4 +89,4 @@ git add .
 git commit -m "Add decrypted data file."
 
 # Push the changes to the remote repository.
-git push origin master
+git push origin main
